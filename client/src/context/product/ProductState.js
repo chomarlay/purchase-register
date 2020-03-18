@@ -18,7 +18,30 @@ import {
 
 const ProductState = props => {
   const initialState = {
-    products: []
+    products: [
+      {
+        name: 'Miele Frdge',
+        description: 'Miele integrated fridge',
+        category: 'Appliances',
+        brand: 'Miele',
+        model: 'Miele1-Frdg',
+        serialNo: 'ML-727282',
+        warranty: 5,
+        amount: 3000.99,
+        purchaseDate: '2020-02-12T00:00:00.000Z'
+      },
+      {
+        name: 'HP Mouse',
+        description: 'HP wireless Mouse',
+        category: 'Computers',
+        brand: 'HP',
+        model: 'HP-WIRELESS-mouse',
+        serialNo: 'HPW-727282',
+        warranty: 2,
+        amount: 30.25,
+        purchaseDate: '2019-09-12T00:00:00.000Z'
+      }
+    ]
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);

@@ -1,18 +1,19 @@
 import React from 'react';
 
 const ProductItem = ({ product }) => {
-  const { name, category } = product;
+  const { name, category, description } = product;
   const onSetCurrent = () => {
     console.log('Set current');
   };
 
   const onDelete = () => {
-    console.log('Set current');
+    console.log('Delete');
   };
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>
-        {name}{' '}
+        {name}
+        {' - '} {description}
         <span style={{ float: 'right' }}>
           <button className='btn btn-dark btn-sm' onClick={onSetCurrent}>
             Edit

@@ -20,6 +20,7 @@ const ProductState = props => {
   const initialState = {
     products: [
       {
+        id: 1,
         name: 'Miele Fridge',
         description: 'Miele integrated fridge',
         category: 'Appliances',
@@ -31,6 +32,7 @@ const ProductState = props => {
         purchaseDate: '2020-02-12T00:00:00.000Z'
       },
       {
+        id: 2,
         name: 'HP Mouse',
         description: 'HP wireless Mouse',
         category: 'Computers',

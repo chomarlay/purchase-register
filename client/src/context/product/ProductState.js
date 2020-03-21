@@ -20,7 +20,7 @@ const ProductState = props => {
   const initialState = {
     products: [
       {
-        name: 'Miele Frdge',
+        name: 'Miele Fridge',
         description: 'Miele integrated fridge',
         category: 'Appliances',
         brand: 'Miele',

@@ -46,23 +46,25 @@ const ProductState = props => {
     ]
   };
 
-  // Add Product
-  // const addProduct = product => {
-  //   product.id = uuid.v4();
-  //   dispatch({ type: 'ADD_PRODUCT', payload: product });
-  // };
-
   const [state, dispatch] = useReducer(productReducer, initialState);
+
+  // Add Product
   const addProduct = product => {
     product.id = uuidv4();
     dispatch({ type: 'ADD_PRODUCT', payload: product });
+  };
+
+  // Delete Product
+  const deleteProduct = id => {
+    dispatch({ type: 'DELETE_PRODUCT', payload: id });
   };
 
   return (
     <ProductContext.Provider
       value={{
         products: state.products,
-        addProduct
+        addProduct,
+        deleteProduct
       }}
     >
       {props.children}

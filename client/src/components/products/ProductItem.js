@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ProductContext from '../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
-  const { name, category, description } = product;
+  const productContext = useContext(ProductContext);
+  const { deleteProduct } = productContext;
+
+  const { id, name, category, description } = product;
   const onSetCurrent = () => {
     console.log('Set current');
   };
 
   const onDelete = () => {
     console.log('Delete');
+    deleteProduct(id);
   };
   return (
     <div className='card bg-light'>

@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import ProductContext from '../../context/product/productContext';
 
 const ProductForm = () => {
+  const productContext = useContext(ProductContext);
+  const { addProduct } = productContext;
+
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -26,10 +30,26 @@ const ProductForm = () => {
   } = product;
 
   const onChange = e => {
-    setProduct({ ...product, [e.target.name]: e.target.name });
+    setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    addProduct(product);
+    setProduct({
+      name: '',
+      description: '',
+      category: 'Appliances',
+      brand: '',
+      model: '',
+      serialNo: '',
+      warranty: 0,
+      amount: 0.0,
+      purchaseDate: ''
+    });
   };
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h2 className='text-primary'>Add Product</h2>
       <input
         type='text'
@@ -45,7 +65,6 @@ const ProductForm = () => {
         value={description}
         onChange={onChange}
       />
-      <h5>Catetory</h5>
       <input
         type='radio'
         name='category'
@@ -61,7 +80,15 @@ const ProductForm = () => {
         checked={category === 'Computers'}
         onChange={onChange}
       />
-      Computers
+      Computers{' '}
+      <input
+        type='radio'
+        name='category'
+        value='Others'
+        checked={category === 'Others'}
+        onChange={onChange}
+      />
+      Others
       <input
         type='text'
         placeholder='Brand'
@@ -83,26 +110,34 @@ const ProductForm = () => {
         value={serialNo}
         onChange={onChange}
       />
+      <h5>Warranty(months)</h5>
       <input
-        type='text'
+        type='number'
         placeholder='Warranty'
         name='warranty'
         value={warranty}
         onChange={onChange}
       />
+      <h5>Amount</h5>
       <input
-        type='text'
+        type='number'
         placeholder='Amount'
         name='amount'
         value={amount}
         onChange={onChange}
       />
+      <h5>Purchase Date</h5>
       <input
-        type='text'
+        type='date'
         placeholder='Purchase Date'
         name='purchaseDate'
         value={purchaseDate}
         onChange={onChange}
+      />
+      <input
+        type='submit'
+        value='Add Product'
+        className='btn btn-primary btn-block'
       />
     </form>
   );

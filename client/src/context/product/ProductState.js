@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import ProductContext from './productContext';
 import productReducer from './productReducer';
 
@@ -46,11 +46,23 @@ const ProductState = props => {
     ]
   };
 
+  // Add Product
+  // const addProduct = product => {
+  //   product.id = uuid.v4();
+  //   dispatch({ type: 'ADD_PRODUCT', payload: product });
+  // };
+
   const [state, dispatch] = useReducer(productReducer, initialState);
+  const addProduct = product => {
+    product.id = uuidv4();
+    dispatch({ type: 'ADD_PRODUCT', payload: product });
+  };
+
   return (
     <ProductContext.Provider
       value={{
-        products: state.products
+        products: state.products,
+        addProduct
       }}
     >
       {props.children}

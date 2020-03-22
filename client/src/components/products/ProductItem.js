@@ -3,17 +3,19 @@ import ProductContext from '../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
   const productContext = useContext(ProductContext);
-  const { deleteProduct } = productContext;
+  const { deleteProduct, setCurrent, clearCurrent } = productContext;
 
   const { id, name, category, description } = product;
+
   const onSetCurrent = () => {
-    console.log('Set current');
+    setCurrent(product);
   };
 
   const onDelete = () => {
-    console.log('Delete');
     deleteProduct(id);
+    clearCurrent();
   };
+
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>

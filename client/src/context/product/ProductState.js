@@ -18,6 +18,7 @@ import {
 
 const ProductState = props => {
   const initialState = {
+    current: null,
     products: [
       {
         id: 1,
@@ -59,12 +60,25 @@ const ProductState = props => {
     dispatch({ type: 'DELETE_PRODUCT', payload: id });
   };
 
+  // Set Current Product
+  const setCurrent = product => {
+    dispatch({ type: 'SET_CURRENT', payload: product });
+  };
+
+  // Clear current
+  const clearCurrent = () => {
+    dispatch({ type: 'CLEAR_CURRENT' });
+  };
+
   return (
     <ProductContext.Provider
       value={{
         products: state.products,
+        current: state.current,
         addProduct,
-        deleteProduct
+        deleteProduct,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}

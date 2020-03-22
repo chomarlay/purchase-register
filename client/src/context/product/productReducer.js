@@ -26,6 +26,17 @@ export default (state, action) => {
           product => product.id !== action.payload
         )
       };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload
+      };
+
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
     default:
       return state;
   }

@@ -30,7 +30,7 @@ const ProductState = props => {
         serialNo: 'ML-727282',
         warranty: 5,
         amount: 3000.99,
-        purchaseDate: '2020-02-12T00:00:00.000Z'
+        purchaseDate: '2020-02-12'
       },
       {
         id: 2,
@@ -42,7 +42,7 @@ const ProductState = props => {
         serialNo: 'HPW-727282',
         warranty: 2,
         amount: 30.25,
-        purchaseDate: '2019-09-12T00:00:00.000Z'
+        purchaseDate: '2019-09-12'
       }
     ]
   };
@@ -53,6 +53,11 @@ const ProductState = props => {
   const addProduct = product => {
     product.id = uuidv4();
     dispatch({ type: 'ADD_PRODUCT', payload: product });
+  };
+
+  // update Product
+  const updateProduct = product => {
+    dispatch({ type: 'UPDATE_PRODUCT', payload: product });
   };
 
   // Delete Product
@@ -76,6 +81,7 @@ const ProductState = props => {
         products: state.products,
         current: state.current,
         addProduct,
+        updateProduct,
         deleteProduct,
         setCurrent,
         clearCurrent

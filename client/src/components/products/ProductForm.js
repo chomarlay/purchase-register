@@ -1,9 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ProductContext from '../../context/product/productContext';
+import { CLEAR_CURRENT } from '../../context/types';
 
 const ProductForm = () => {
   const productContext = useContext(ProductContext);
-  const { addProduct } = productContext;
+  const { addProduct, updateProduct, clearCurrent, current } = productContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setProduct(current);
+    } else {
+      setProduct({
+        name: '',
+        description: '',
+        category: 'Appliances',
+        brand: '',
+        model: '',
+        serialNo: '',
+        warranty: 0,
+        amount: 0.0,
+        purchaseDate: ''
+      });
+    }
+  }, [productContext, current]);
 
   const [product, setProduct] = useState({
     name: '',
@@ -35,22 +54,23 @@ const ProductForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    addProduct(product);
-    setProduct({
-      name: '',
-      description: '',
-      category: 'Appliances',
-      brand: '',
-      model: '',
-      serialNo: '',
-      warranty: 0,
-      amount: 0.0,
-      purchaseDate: ''
-    });
+    if (current === null) {
+      addProduct(product);
+    } else {
+      updateProduct(product);
+    }
+    clearAll();
   };
+
+  const clearAll = () => {
+    clearCurrent();
+  };
+
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Add Product</h2>
+      <h2 className='text-primary'>
+        {current ? 'Edit Product' : 'Add Product'}
+      </h2>
       <input
         type='text'
         placeholder='Name'
@@ -136,9 +156,16 @@ const ProductForm = () => {
       />
       <input
         type='submit'
-        value='Add Product'
+        value={current ? 'Update Product' : 'Add Product'}
         className='btn btn-primary btn-block'
       />
+      {current && (
+        <div>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };

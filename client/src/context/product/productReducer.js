@@ -18,7 +18,13 @@ export default (state, action) => {
         ...state,
         products: [action.payload, ...state.products]
       };
-
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map(product =>
+          product.id === action.payload.id ? action.payload : product
+        )
+      };
     case DELETE_PRODUCT:
       return {
         ...state,

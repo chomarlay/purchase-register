@@ -30,15 +30,33 @@ export default (state, action) => {
         ...state,
         products: state.products.filter(
           product => product.id !== action.payload
-        )
+        ),
+        // added extra to refresh the filtered list.  This was my experiment code, otherwise after delete the filtered list was not refreshed
+        filtered:
+          state.filtered !== null
+            ? state.filtered.filter(product => product.id !== action.payload)
+            : state.filtered
       };
     case SET_CURRENT:
       return {
         ...state,
         current: action.payload
       };
-
     case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
+    case FILTER_PRODUCTS:
+      return {
+        ...state,
+        filtered: state.products.filter(product => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return product.name.match(regex) || product.description.match(regex);
+        })
+      };
+
+    case CLEAR_FILTER:
       return {
         ...state,
         current: null

@@ -19,6 +19,7 @@ import {
 const ProductState = props => {
   const initialState = {
     current: null,
+    filtered: null,
     products: [
       {
         id: 1,
@@ -75,16 +76,28 @@ const ProductState = props => {
     dispatch({ type: 'CLEAR_CURRENT' });
   };
 
+  // Filter products
+  const filterProducts = text => {
+    dispatch({ type: 'FILTER_PRODUCTS', payload: text });
+  };
+  // Clear current
+  const clearFilter = () => {
+    dispatch({ type: 'CLEAR_FILTER' });
+  };
+
   return (
     <ProductContext.Provider
       value={{
         products: state.products,
         current: state.current,
+        filtered: state.filtered,
         addProduct,
         updateProduct,
         deleteProduct,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        filterProducts,
+        clearFilter
       }}
     >
       {props.children}

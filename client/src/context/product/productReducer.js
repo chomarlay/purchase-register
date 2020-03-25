@@ -23,7 +23,13 @@ export default (state, action) => {
         ...state,
         products: state.products.map(product =>
           product.id === action.payload.id ? action.payload : product
-        )
+        ),
+        filtered:
+          state.filtered !== null
+            ? state.filtered.map(product =>
+                product.id === action.payload.id ? action.payload : product
+              )
+            : null
       };
     case DELETE_PRODUCT:
       return {

@@ -13,7 +13,7 @@ const Login = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log('Register User');
+    console.log('Login User');
   };
   return (
     <div className='form-container'>

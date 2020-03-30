@@ -3,9 +3,9 @@ import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 import { CLEAR_ERRORS } from '../../context/types';
 
-const Register = () => {
+const Register = props => {
   const authContext = useContext(AuthContext);
-  const { register, clearErrors, error } = authContext;
+  const { register, clearErrors, error, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -18,11 +18,16 @@ const Register = () => {
   });
 
   useEffect(() => {
+    if (isAuthenticated) {
+      // if authenticated route to the home page after the registration
+      props.history.push('/');
+    }
     if (error === 'User already exist') {
       setAlert(error, 'danger');
       clearErrors();
     }
-  }, [error]);
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const { name, email, password, password2 } = user;
   const onChange = e => {

@@ -10,8 +10,10 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alerts from './components/pages/Alerts';
 import setAuthToken from './utils/setAuthToken';
-import './App.css';
+import PrivateRoute from './components/routing/PrivateRoute';
 
+import './App.css';
+// need this ??
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -27,7 +29,7 @@ const App = () => {
               <Alerts />
               <div className='container'>
                 <Switch>
-                  <Route exact path='/' component={Home} />
+                  <PrivateRoute exact path='/' component={Home} />
                   <Route exact path='/about' component={About} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />

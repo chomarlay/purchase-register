@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ProductContext from './productContext';
 import productReducer from './productReducer';
+import axios from 'axios';
 
 import {
   GET_PRODUCTS,
@@ -20,40 +21,25 @@ const ProductState = props => {
   const initialState = {
     current: null,
     filtered: null,
-    products: [
-      {
-        id: 1,
-        name: 'Miele Fridge',
-        description: 'Miele integrated fridge',
-        category: 'Appliances',
-        brand: 'Miele',
-        model: 'Miele1-Frdg',
-        serialNo: 'ML-727282',
-        warranty: 5,
-        amount: 3000.99,
-        purchaseDate: '2020-02-12'
-      },
-      {
-        id: 2,
-        name: 'HP Mouse',
-        description: 'HP wireless Mouse',
-        category: 'Computers',
-        brand: 'HP',
-        model: 'HP-WIRELESS-mouse',
-        serialNo: 'HPW-727282',
-        warranty: 2,
-        amount: 30.25,
-        purchaseDate: '2019-09-12'
-      }
-    ]
+    error: null,
+    products: []
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);
 
   // Add Product
-  const addProduct = product => {
-    product.id = uuidv4();
-    dispatch({ type: 'ADD_PRODUCT', payload: product });
+  const addProduct = async product => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json' // note: token is sent globally - see setToken.js
+      }
+    };
+    try {
+      const res = await axios.post('api/purchases', product, config);
+      dispatch({ type: 'ADD_PRODUCT', payload: res.data });
+    } catch (err) {
+      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+    }
   };
 
   // update Product
@@ -91,6 +77,7 @@ const ProductState = props => {
         products: state.products,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addProduct,
         updateProduct,
         deleteProduct,

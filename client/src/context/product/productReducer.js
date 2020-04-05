@@ -22,12 +22,12 @@ export default (state, action) => {
       return {
         ...state,
         products: state.products.map(product =>
-          product.id === action.payload.id ? action.payload : product
+          product._id === action.payload.id ? action.payload : product
         ),
         filtered:
           state.filtered !== null
             ? state.filtered.map(product =>
-                product.id === action.payload.id ? action.payload : product
+                product._id === action.payload.id ? action.payload : product
               )
             : null
       };
@@ -35,12 +35,12 @@ export default (state, action) => {
       return {
         ...state,
         products: state.products.filter(
-          product => product.id !== action.payload
+          product => product._id !== action.payload
         ),
         // added extra to refresh the filtered list.  This was my experiment code, otherwise after delete the filtered list was not refreshed
         filtered:
           state.filtered !== null
-            ? state.filtered.filter(product => product.id !== action.payload)
+            ? state.filtered.filter(product => product._id !== action.payload)
             : state.filtered
       };
     case SET_CURRENT:
@@ -66,6 +66,12 @@ export default (state, action) => {
       return {
         ...state,
         current: null
+      };
+
+    case PRODUCT_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return state;

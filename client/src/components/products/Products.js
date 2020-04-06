@@ -1,23 +1,36 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import ProductContext from '../../context/product/productContext';
 import ProductItem from './ProductItem';
+import Spinner from '../layout/Spinner';
 
 const Products = () => {
   const productContext = useContext(ProductContext);
-  const { products, filtered } = productContext;
+  const { getProducts, products, filtered, loading } = productContext;
 
-  if (products !== null && products.length === 0) {
+  useEffect(() => {
+    getProducts();
+    //eslint-disable-next-line
+  }, []);
+
+  if (products !== null && products.length === 0 && !loading) {
     return <h4>Please enter products</h4>;
   }
   return (
     <Fragment>
-      {filtered !== null
-        ? filtered.map(product => (
-            <ProductItem key={product._id} product={product} />
-          ))
-        : products.map(product => (
-            <ProductItem key={product._id} product={product} />
-          ))}
+      {products !== null && !loading ? (
+        <div>
+          {' '}
+          {filtered !== null
+            ? filtered.map((product) => (
+                <ProductItem key={product._id} product={product} />
+              ))
+            : products.map((product) => (
+                <ProductItem key={product._id} product={product} />
+              ))}
+        </div>
+      ) : (
+        <Spinner />
+      )}
     </Fragment>
   );
 };

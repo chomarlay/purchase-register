@@ -2,12 +2,18 @@ import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import ProductContext from '../../context/product/productContext';
 
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const { logout, isAuthenticated, user } = authContext;
+
+  const productContext = useContext(ProductContext);
+  const { clearProducts } = productContext;
+
   const onLogout = () => {
     logout();
+    clearProducts();
   };
   const authLinks = (
     <Fragment>
@@ -42,11 +48,11 @@ const Navbar = ({ title, icon }) => {
 };
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
-  icon: PropTypes.string
+  icon: PropTypes.string,
 };
 
 Navbar.defaultProps = {
   title: 'Purchase Register',
-  icon: 'fas fa-file-invoice'
+  icon: 'fas fa-file-invoice',
 };
 export default Navbar;

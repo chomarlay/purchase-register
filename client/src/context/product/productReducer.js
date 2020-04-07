@@ -29,7 +29,7 @@ export default (state, action) => {
       return {
         ...state,
         products: state.products.map((product) =>
-          product._id === action.payload.id ? action.payload : product
+          product._id === action.payload._id ? action.payload : product
         ),
         filtered:
           state.filtered !== null

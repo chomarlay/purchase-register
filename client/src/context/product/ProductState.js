@@ -53,13 +53,32 @@ const ProductState = (props) => {
   };
 
   // update Product
-  const updateProduct = (product) => {
-    dispatch({ type: 'UPDATE_PRODUCT', payload: product });
+  const updateProduct = async (product) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json', // note: token is sent globally - see setToken.js
+      },
+    };
+    try {
+      const res = await axios.put(
+        `\api/purchases/${product._id}`,
+        product,
+        config
+      );
+      dispatch({ type: 'UPDATE_PRODUCT', payload: res.data });
+    } catch (err) {
+      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+    }
   };
 
   // Delete Product
-  const deleteProduct = (id) => {
-    dispatch({ type: 'DELETE_PRODUCT', payload: id });
+  const deleteProduct = async (id) => {
+    try {
+      const res = await axios.delete('api/purchases/' + id);
+      dispatch({ type: 'DELETE_PRODUCT', payload: id });
+    } catch (err) {
+      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+    }
   };
 
   // Set Current Product

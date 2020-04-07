@@ -5,14 +5,14 @@ const ProductItem = ({ product }) => {
   const productContext = useContext(ProductContext);
   const { deleteProduct, setCurrent, clearCurrent } = productContext;
 
-  const { id, name, category, description } = product;
+  const { _id, name, category, description } = product;
 
   const onSetCurrent = () => {
     setCurrent(product);
   };
 
   const onDelete = () => {
-    deleteProduct(id);
+    deleteProduct(_id);
     clearCurrent();
   };
 

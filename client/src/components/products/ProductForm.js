@@ -19,7 +19,7 @@ const ProductForm = () => {
         serialNo: '',
         warranty: 0,
         amount: 0.0,
-        purchaseDate: ''
+        purchaseDate: '',
       });
     }
   }, [productContext, current]);
@@ -33,7 +33,7 @@ const ProductForm = () => {
     serialNo: '',
     warranty: 0,
     amount: 0.0,
-    purchaseDate: ''
+    purchaseDate: '',
   });
 
   const {
@@ -45,14 +45,14 @@ const ProductForm = () => {
     serialNo,
     warranty,
     amount,
-    purchaseDate
+    purchaseDate,
   } = product;
 
-  const onChange = e => {
+  const onChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (current === null) {
       addProduct(product);
@@ -66,6 +66,10 @@ const ProductForm = () => {
     clearCurrent();
   };
 
+  const convDate = (d) => {
+    // TODO find a better way to convert from JSON datetime string to js date string
+    return d.substr(0, 10);
+  };
   return (
     <form onSubmit={onSubmit}>
       <h2 className='text-primary'>
@@ -151,7 +155,7 @@ const ProductForm = () => {
         type='date'
         placeholder='Purchase Date'
         name='purchaseDate'
-        value={purchaseDate}
+        value={convDate(purchaseDate)}
         onChange={onChange}
       />
       <input

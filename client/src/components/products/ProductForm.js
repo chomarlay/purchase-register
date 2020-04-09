@@ -113,47 +113,24 @@ const ProductForm = () => {
         onChange={onChange}
       />
       Others
-      <input
-        type='text'
-        placeholder='Brand'
-        name='brand'
-        value={brand}
-        onChange={onChange}
-      />
-      <input
-        type='text'
-        placeholder='Model'
-        name='model'
-        value={model}
-        onChange={onChange}
-      />
-      <input
-        type='text'
-        placeholder='Serial Number'
-        name='serialNo'
-        value={serialNo}
-        onChange={onChange}
-      />
+      <h5>Brand</h5>
+      <input type='text' name='brand' value={brand} onChange={onChange} />
+      <h5>Model</h5>
+      <input type='text' name='model' value={model} onChange={onChange} />
+      <h5>Serial Number</h5>
+      <input type='text' name='serialNo' value={serialNo} onChange={onChange} />
       <h5>Warranty(months)</h5>
       <input
         type='number'
-        placeholder='Warranty'
         name='warranty'
         value={warranty}
         onChange={onChange}
       />
       <h5>Amount</h5>
-      <input
-        type='number'
-        placeholder='Amount'
-        name='amount'
-        value={amount}
-        onChange={onChange}
-      />
+      <input type='number' name='amount' value={amount} onChange={onChange} />
       <h5>Purchase Date</h5>
       <input
         type='date'
-        placeholder='Purchase Date'
         name='purchaseDate'
         value={convDate(purchaseDate)}
         onChange={onChange}

@@ -1,0 +1,99 @@
+-- Purchase Register
+--- SERVER SIDE
+create directory Purchase-Register
+open in VSC
+from terminal window > npm init -y
+package.json will be created
+
+-- install the dependencies
+npm i express bcryptjs jsonwebtoken config express-validator mongoose
+-- install dependencies for attachment
+npm i multer body-parser fs-extra 
+-- install dev dependencies
+npm i -D nodemon concurrently
+-- add server.js
+-- add scripts in package.json 
+npm run server
+
+
+-- add to local git
+-- push to github
+create a new repository in github
+then, 
+git remote add origin https://github.com/chomarlay/purchase-register.git
+git push -u origin master
+
+Server side, 
+-- using Mongoose
+--- see express-validator for how to vailidate the data
+
+-- CLIENT SIDE
+
+install react unser server (under client directory)
+npx create-react-app client
+
+-- to start both server and client together  (Note: already installed concurrently earlier)
+-- package.json (from server)
+
+    "client": "npm start --prefix client",
+    "clientinstall": "npm install --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+-- add proxy in the client to avoid to call the server side as http://localhost:5000/...
+-- package.proxy (from client)
+add the following line   "proxy": "http://localhost:5000"
+after this 
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  
+-- to start both server and client (react running on port:3000, server running on port:5000)
+---- from the root directory
+npm run dev
+
+
+-- get rid of .gitignore and readme.md from client and add the following to the server .gitignore file
+/client/build
+
+
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+-- cd to client to install the dependencies
+npm i axios react-router-dom uuid react-transition-group
+
+-- remove App.test.js, index.css, logo.svg, serviceWorker.js 
+-- clean up index.js  (remove serviceWorker, logo.svg etc)
+-- copy App.css from the tutorial
+-- modify index.html to include fontawesome
+
+
+----------------------------------------------------------------------------------------------------------
+-- deploy to Heroku
+-- sign up to Heroku
+-- install Heroku cli
+--- make changes in project
+server.js
+production.json  --- equivalent for default.json
+package.json -- add for herouku postbuild to install client in herouku
+from project root directory heroku login
+C:\Data\dev\src\react-apps\contact-keeper> heroku create
+Creating app... done, ⬢ peaceful-ridge-24409
+https://peaceful-ridge-24409.herokuapp.com/ | https://git.heroku.com/peaceful-ridge-24409.git
+
+--commit to local git
+git add .
+git commit -m 'Prepare for deploy'
+
+-- to add the app in heroku
+heroku git:remote -a peaceful-ridge-24409
+-- to deploy
+git push heroku master

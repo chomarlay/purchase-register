@@ -15,6 +15,8 @@ import {
   CLEAR_PRODUCTS,
   CLEAR_FILTER,
   PRODUCT_ERROR,
+  SET_SHOW_ATTACHMENTS,
+  CLEAR_SHOW_ATTACHMENTS,
 } from '../types';
 
 const ProductState = (props) => {
@@ -23,6 +25,8 @@ const ProductState = (props) => {
     filtered: null,
     error: null,
     products: null,
+    showAttachment: false,
+    attachments: null,
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);
@@ -81,6 +85,21 @@ const ProductState = (props) => {
     }
   };
 
+  // Add Attachment
+  const addAttachment = async (attachment) => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data', // note: token is sent globally - see setToken.js
+      },
+    };
+    try {
+      const res = await axios.post('api/attachments', attachment, config);
+      dispatch({ type: 'ADD_ATTACHMENT', payload: res.data });
+    } catch (err) {
+      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+    }
+  };
+
   // Set Current Product
   const setCurrent = (product) => {
     dispatch({ type: 'SET_CURRENT', payload: product });
@@ -90,12 +109,20 @@ const ProductState = (props) => {
   const clearCurrent = () => {
     dispatch({ type: 'CLEAR_CURRENT' });
   };
+  // Set showAttachments
+  const setShowAttachments = () => {
+    dispatch({ type: 'SET_SHOW_ATTACHMENTS' });
+  };
 
+  // clearShowAttachments
+  const clearShowAttachments = () => {
+    dispatch({ type: 'CLEAR_SHOW_ATTACHMENTS' });
+  };
   // Filter products
   const filterProducts = (text) => {
     dispatch({ type: 'FILTER_PRODUCTS', payload: text });
   };
-  // Clear current
+  // Clear filter
   const clearFilter = () => {
     dispatch({ type: 'CLEAR_FILTER' });
   };
@@ -112,12 +139,16 @@ const ProductState = (props) => {
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        showAttachments: state.showAttachments,
         getProducts,
         addProduct,
         updateProduct,
         deleteProduct,
         setCurrent,
         clearCurrent,
+        setShowAttachments,
+        clearShowAttachments,
+        addAttachment,
         filterProducts,
         clearFilter,
         clearProducts,

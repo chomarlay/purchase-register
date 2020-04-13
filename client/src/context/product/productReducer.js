@@ -9,6 +9,9 @@ import {
   CLEAR_PRODUCTS,
   CLEAR_FILTER,
   PRODUCT_ERROR,
+  SET_SHOW_ATTACHMENTS,
+  CLEAR_SHOW_ATTACHMENTS,
+  ADD_ATTACHMENT,
 } from '../types';
 
 export default (state, action) => {
@@ -56,6 +59,21 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload,
+      };
+    case ADD_ATTACHMENT:
+      return {
+        ...state,
+        //TODO --- still thinking
+      };
+    case SET_SHOW_ATTACHMENTS:
+      return {
+        ...state,
+        showAttachments: true,
+      };
+    case CLEAR_SHOW_ATTACHMENTS:
+      return {
+        ...state,
+        showAttachments: null,
       };
     case CLEAR_CURRENT:
       return {

@@ -14,7 +14,7 @@ const upload = multer({ storage: memStorage });
 //@desc     Add new attachment
 //@access   Private
 router.post(
-  '/upload',
+  '/',
   [
     auth,
     // [check('name', 'Please enter name.').not().isEmpty()],
@@ -41,7 +41,7 @@ router.post(
     try {
       const attachment = await newAttachment.save();
       // res.json(attachment);
-      res.status(400).json({
+      res.status(200).json({
         msg: `Attachment uploaded successfully for ${attachment.product}`,
       });
     } catch (err) {

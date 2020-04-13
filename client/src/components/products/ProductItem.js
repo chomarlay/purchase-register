@@ -3,12 +3,25 @@ import ProductContext from '../../context/product/productContext';
 
 const ProductItem = ({ product }) => {
   const productContext = useContext(ProductContext);
-  const { deleteProduct, setCurrent, clearCurrent } = productContext;
+  const {
+    deleteProduct,
+    setCurrent,
+    clearCurrent,
+    setShowAttachments,
+    clearShowAttachments,
+  } = productContext;
 
   const { _id, name, category, description } = product;
 
   const onSetCurrent = () => {
     setCurrent(product);
+    clearShowAttachments();
+  };
+
+  const onAttachments = () => {
+    console.log('Upload Attachemnts');
+    setCurrent(product);
+    setShowAttachments();
   };
 
   const onDelete = () => {
@@ -24,6 +37,9 @@ const ProductItem = ({ product }) => {
         <span style={{ float: 'right' }}>
           <button className='btn btn-dark btn-sm' onClick={onSetCurrent}>
             Edit
+          </button>
+          <button className='btn btn-dark btn-sm' onClick={onAttachments}>
+            Attachments
           </button>
           <button className='btn btn-danger btn-sm' onClick={onDelete}>
             Delete

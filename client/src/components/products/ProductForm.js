@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ProductContext from '../../context/product/productContext';
-import { CLEAR_CURRENT } from '../../context/types';
 
 const ProductForm = () => {
   const productContext = useContext(ProductContext);

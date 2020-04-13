@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import ProductContext from './productContext';
 import productReducer from './productReducer';
 import axios from 'axios';
@@ -17,6 +17,7 @@ import {
   PRODUCT_ERROR,
   SET_SHOW_ATTACHMENTS,
   CLEAR_SHOW_ATTACHMENTS,
+  ADD_ATTACHMENT,
 } from '../types';
 
 const ProductState = (props) => {
@@ -35,9 +36,9 @@ const ProductState = (props) => {
   const getProducts = async () => {
     try {
       const res = await axios.get('api/purchases');
-      dispatch({ type: 'GET_PRODUCTS', payload: res.data });
+      dispatch({ type: GET_PRODUCTS, payload: res.data });
     } catch (err) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
     }
   };
 
@@ -50,9 +51,9 @@ const ProductState = (props) => {
     };
     try {
       const res = await axios.post('api/purchases', product, config);
-      dispatch({ type: 'ADD_PRODUCT', payload: res.data });
+      dispatch({ type: ADD_PRODUCT, payload: res.data });
     } catch (err) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
     }
   };
 
@@ -65,23 +66,23 @@ const ProductState = (props) => {
     };
     try {
       const res = await axios.put(
-        `\api/purchases/${product._id}`,
+        `api/purchases/${product._id}`,
         product,
         config
       );
-      dispatch({ type: 'UPDATE_PRODUCT', payload: res.data });
+      dispatch({ type: UPDATE_PRODUCT, payload: res.data });
     } catch (err) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
     }
   };
 
   // Delete Product
   const deleteProduct = async (id) => {
     try {
-      const res = await axios.delete('api/purchases/' + id);
-      dispatch({ type: 'DELETE_PRODUCT', payload: id });
+      await axios.delete('api/purchases/' + id);
+      dispatch({ type: DELETE_PRODUCT, payload: id });
     } catch (err) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
     }
   };
 
@@ -94,42 +95,42 @@ const ProductState = (props) => {
     };
     try {
       const res = await axios.post('api/attachments', attachment, config);
-      dispatch({ type: 'ADD_ATTACHMENT', payload: res.data });
+      dispatch({ type: ADD_ATTACHMENT, payload: res.data });
     } catch (err) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: err.response.msg });
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
     }
   };
 
   // Set Current Product
   const setCurrent = (product) => {
-    dispatch({ type: 'SET_CURRENT', payload: product });
+    dispatch({ type: SET_CURRENT, payload: product });
   };
 
   // Clear current
   const clearCurrent = () => {
-    dispatch({ type: 'CLEAR_CURRENT' });
+    dispatch({ type: CLEAR_CURRENT });
   };
   // Set showAttachments
   const setShowAttachments = () => {
-    dispatch({ type: 'SET_SHOW_ATTACHMENTS' });
+    dispatch({ type: SET_SHOW_ATTACHMENTS });
   };
 
-  // clearShowAttachments
+  // clear  howAttachments
   const clearShowAttachments = () => {
-    dispatch({ type: 'CLEAR_SHOW_ATTACHMENTS' });
+    dispatch({ type: CLEAR_SHOW_ATTACHMENTS });
   };
   // Filter products
   const filterProducts = (text) => {
-    dispatch({ type: 'FILTER_PRODUCTS', payload: text });
+    dispatch({ type: FILTER_PRODUCTS, payload: text });
   };
   // Clear filter
   const clearFilter = () => {
-    dispatch({ type: 'CLEAR_FILTER' });
+    dispatch({ type: CLEAR_FILTER });
   };
 
   // Clear products
   const clearProducts = () => {
-    dispatch({ type: 'CLEAR_PRODUCTS' });
+    dispatch({ type: CLEAR_PRODUCTS });
   };
 
   return (

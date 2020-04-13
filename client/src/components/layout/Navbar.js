@@ -9,11 +9,12 @@ const Navbar = ({ title, icon }) => {
   const { logout, isAuthenticated, user } = authContext;
 
   const productContext = useContext(ProductContext);
-  const { clearProducts } = productContext;
+  const { clearProducts, clearShowAttachments } = productContext;
 
   const onLogout = () => {
     logout();
     clearProducts();
+    clearShowAttachments();
   };
   const authLinks = (
     <Fragment>

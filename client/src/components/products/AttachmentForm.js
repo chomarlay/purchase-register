@@ -3,18 +3,20 @@ import ProductContext from '../../context/product/productContext';
 
 const AttachmentForm = () => {
   const productContext = useContext(ProductContext);
-  const { addAttachment, current, attachment } = productContext;
+  const { addAttachment, current } = productContext;
 
   useEffect(() => {
     if (current !== null) {
       setProduct(current);
     }
   }, [productContext, current]);
+
   const [product, setProduct] = useState({
     _id: '',
     name: '',
     description: '',
   });
+
   const [file, setFile] = useState('');
   const { _id, name, description } = product;
 
@@ -26,7 +28,7 @@ const AttachmentForm = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('myAttachment', file);
-    formData.append('productId', product._id);
+    formData.append('productId', _id);
     addAttachment(formData);
   };
 

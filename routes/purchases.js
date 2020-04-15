@@ -24,14 +24,7 @@ router.get('/', auth, async (req, res) => {
 //@access   Private
 router.post(
   '/',
-  [
-    auth,
-    [
-      check('name', 'Please enter name.')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('name', 'Please enter name.').not().isEmpty()]],
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -47,7 +40,7 @@ router.post(
       serialNo,
       warranty,
       amount,
-      purchaseDate
+      purchaseDate,
     } = req.body;
     const newProduct = new Product({
       name,
@@ -59,7 +52,7 @@ router.post(
       warranty,
       amount,
       purchaseDate,
-      user: req.user.id
+      user: req.user.id,
     });
     try {
       const product = await newProduct.save();
@@ -76,14 +69,7 @@ router.post(
 //@access   Private
 router.put(
   '/:id',
-  [
-    auth,
-    [
-      check('name', 'Please enter name.')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('name', 'Please enter name.').not().isEmpty()]],
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -99,7 +85,7 @@ router.put(
       serialNo,
       warranty,
       amount,
-      purchaseDate
+      purchaseDate,
     } = req.body;
     let productFields = {};
     if (name) productFields.name = name;
@@ -151,9 +137,14 @@ router.delete('/:id', auth, async (req, res) => {
         .json({ msg: 'Not authorized to delete the product' });
     }
     // ok to delete
-    await Product.findByIdAndDelete(req.params.id);
+
+    await product.remove(); // note: pre('remove') hook only works with document.remove(), ignore the deprecation warning,  it will be fix in the next release of Mongoose
+
     res.json({ msg: 'Product has been deleted' });
-  } catch (err) {}
+    console.log('Product has been deleted');
+  } catch (err) {
+    console.log('Cannot delete product');
+  }
 });
 
 module.exports = router;

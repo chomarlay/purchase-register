@@ -9,10 +9,10 @@ const auth = require('../middleware/auth');
 //@access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const product = await Product.find({ user: req.user.id })
+    const products = await Product.find({ user: req.user.id })
       //.select('-createdDate')
       .sort({ createdDate: -1 });
-    res.json(product);
+    res.json(products);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server Error' });
@@ -122,7 +122,7 @@ router.put(
 );
 
 //@route    DELETE api/purchases/:id
-//@desc     Update product
+//@desc     Delete product
 //@access   Private
 router.delete('/:id', auth, async (req, res) => {
   try {

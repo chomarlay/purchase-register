@@ -3,11 +3,12 @@ import ProductContext from '../../context/product/productContext';
 
 const AttachmentForm = () => {
   const productContext = useContext(ProductContext);
-  const { addAttachment, current } = productContext;
+  const { getAttachments, addAttachment, current } = productContext;
 
   useEffect(() => {
     if (current !== null) {
       setProduct(current);
+      getAttachments(current); // product id
     }
   }, [productContext, current]);
 

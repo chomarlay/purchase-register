@@ -18,6 +18,7 @@ import {
   SET_SHOW_ATTACHMENTS,
   CLEAR_SHOW_ATTACHMENTS,
   ADD_ATTACHMENT,
+  GET_ATTACHMENTS,
 } from '../types';
 
 const ProductState = (props) => {
@@ -101,6 +102,17 @@ const ProductState = (props) => {
     }
   };
 
+  // get Attachments
+  const getAttachments = async (product) => {
+    try {
+      const res = await axios.get(`api/attachments/product/${product._id}`);
+      console.log(res.data);
+      dispatch({ type: GET_ATTACHMENTS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
+    }
+  };
+
   // Set Current Product
   const setCurrent = (product) => {
     dispatch({ type: SET_CURRENT, payload: product });
@@ -150,6 +162,7 @@ const ProductState = (props) => {
         setShowAttachments,
         clearShowAttachments,
         addAttachment,
+        getAttachments,
         filterProducts,
         clearFilter,
         clearProducts,

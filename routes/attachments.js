@@ -144,9 +144,10 @@ router.get('/:id', auth, async (req, res) => {
         .status(401)
         .json({ msg: 'Not authorized to retrieve the attachment' });
     }
+
+    res.json({ msg: 'Attachment has been retrieved' });
     // res.contentType(attachment.contentType);
     // res.send(attachment.attachmentFile);
-    res.json({ msg: 'Attachment has been retrieved' });
   } catch (err) {
     console.log('Cannot retrieve the Attachment');
   }

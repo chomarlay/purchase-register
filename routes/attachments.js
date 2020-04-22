@@ -31,7 +31,8 @@ router.get('/product/:productId', auth, async (req, res) => {
     const attachments = await Attachment.find({ product: productId })
       //.select('-createdDate')
       .sort({ createdDate: -1 });
-    res.json(attachments.map((attachment) => attachment.fileName));
+    // res.json(attachments.map((attachment) => attachment.fileName));
+    res.json(attachments);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server Error' });
@@ -79,10 +80,10 @@ router.post(
       }
 
       const attachment = await newAttachment.save();
-      // res.json(attachment);
-      res.status(200).json({
-        msg: `Attachment uploaded successfully for ${attachment.product}`,
-      });
+      res.json(attachment);
+      // res.status(200).json({
+      //   msg: `Attachment uploaded successfully for ${attachment.product}`,
+      // });
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ msg: 'Server Error' });

@@ -12,6 +12,8 @@ import {
   SET_SHOW_ATTACHMENTS,
   CLEAR_SHOW_ATTACHMENTS,
   ADD_ATTACHMENT,
+  GET_ATTACHMENTS,
+  CLEAR_ATTACHMENTS,
 } from '../types';
 
 export default (state, action) => {
@@ -59,11 +61,17 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload,
+        // attachments: null,
       };
     case ADD_ATTACHMENT:
       return {
         ...state,
-        //TODO --- still thinking
+        attachments: [action.payload, ...state.attachments],
+      };
+    case GET_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: action.payload,
       };
     case SET_SHOW_ATTACHMENTS:
       return {
@@ -74,11 +82,18 @@ export default (state, action) => {
       return {
         ...state,
         showAttachments: null,
+        attachments: null,
       };
     case CLEAR_CURRENT:
       return {
         ...state,
         current: null,
+        attachments: null,
+      };
+    case CLEAR_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: null,
       };
     case FILTER_PRODUCTS:
       return {
@@ -101,6 +116,7 @@ export default (state, action) => {
         filtered: null,
         error: null,
         products: null,
+        attachments: null,
       };
 
     case PRODUCT_ERROR:

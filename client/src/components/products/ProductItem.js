@@ -9,6 +9,9 @@ const ProductItem = ({ product }) => {
     clearCurrent,
     setShowAttachments,
     clearShowAttachments,
+    clearAttachments,
+    getAttachments,
+    current,
   } = productContext;
 
   const { _id, name, category, description } = product;
@@ -19,8 +22,10 @@ const ProductItem = ({ product }) => {
   };
 
   const onAttachments = () => {
-    console.log('Upload Attachemnts');
+    // console.log('Upload Attachemnts');
+    clearAttachments();
     setCurrent(product);
+    getAttachments(product);
     setShowAttachments();
   };
 

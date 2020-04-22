@@ -19,6 +19,7 @@ import {
   CLEAR_SHOW_ATTACHMENTS,
   ADD_ATTACHMENT,
   GET_ATTACHMENTS,
+  CLEAR_ATTACHMENTS,
 } from '../types';
 
 const ProductState = (props) => {
@@ -106,7 +107,6 @@ const ProductState = (props) => {
   const getAttachments = async (product) => {
     try {
       const res = await axios.get(`api/attachments/product/${product._id}`);
-      console.log(res.data);
       dispatch({ type: GET_ATTACHMENTS, payload: res.data });
     } catch (err) {
       dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
@@ -122,12 +122,18 @@ const ProductState = (props) => {
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
+
+  // Clear attachements
+  const clearAttachments = () => {
+    dispatch({ type: CLEAR_ATTACHMENTS });
+  };
+
   // Set showAttachments
   const setShowAttachments = () => {
     dispatch({ type: SET_SHOW_ATTACHMENTS });
   };
 
-  // clear  howAttachments
+  // clear  showAttachments
   const clearShowAttachments = () => {
     dispatch({ type: CLEAR_SHOW_ATTACHMENTS });
   };
@@ -153,12 +159,14 @@ const ProductState = (props) => {
         filtered: state.filtered,
         error: state.error,
         showAttachments: state.showAttachments,
+        attachments: state.attachments,
         getProducts,
         addProduct,
         updateProduct,
         deleteProduct,
         setCurrent,
         clearCurrent,
+        clearAttachments,
         setShowAttachments,
         clearShowAttachments,
         addAttachment,

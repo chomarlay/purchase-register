@@ -20,11 +20,19 @@ const AttachmentItem = ({ attachment }) => {
       <h3 className='text-primary text-left'>
         {fileName}
         <span style={{ float: 'right' }}>
-          <button className='btn btn-dark btn-sm' onClick={onDownload}>
-            Download
+          <button
+            className='badge badge-success'
+            title='Download'
+            onClick={onDownload}
+          >
+            <i class='fas fa-file-download'></i>
           </button>
-          <button className='btn btn-danger btn-sm' onClick={onDelete}>
-            Delete
+          <button
+            className='badge badge-danger'
+            title='Delete'
+            onClick={onDelete}
+          >
+            <i class='fa fa-trash'></i>
           </button>
         </span>
       </h3>

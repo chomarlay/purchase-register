@@ -38,14 +38,26 @@ const ProductItem = ({ product }) => {
         {name}
         {' - '} {description}
         <span style={{ float: 'right' }}>
-          <button className='btn btn-dark btn-sm' onClick={onSetCurrent}>
-            Edit
+          <button
+            className='badge badge-primary'
+            title='Edit'
+            onClick={onSetCurrent}
+          >
+            <i class='fas fa-edit'></i>
           </button>
-          <button className='btn btn-dark btn-sm' onClick={onAttachments}>
-            Attachments
+          <button
+            className='badge badge-success'
+            title='Attachments'
+            onClick={onAttachments}
+          >
+            <i class='far fa-file-alt'></i>
           </button>
-          <button className='btn btn-danger btn-sm' onClick={onDelete}>
-            Delete
+          <button
+            className='badge badge-danger'
+            title='Delete'
+            onClick={onDelete}
+          >
+            <i class='fa fa-trash'></i>
           </button>
         </span>
         <span

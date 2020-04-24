@@ -39,15 +39,17 @@ const AttachmentForm = () => {
     <Fragment>
       <form onSubmit={onSubmit}>
         <h2 className='text-primary'>Upload Attachments</h2>
-        <div />
-        <div />
-        <h3>
+        <br />
+        <br />
+
+        <h3 className='text-dark'>
           {name} - {description}
         </h3>
-        <div />
-        <div />
-        <div>
-          <input type='file' onChange={onChange} />
+        <br />
+
+        <h4>Please select a file</h4>
+        <div className='form-group'>
+          <input type='file' onChange={onChange} id='myfile' name='myfile' />
         </div>
         <input
           type='submit'
@@ -55,6 +57,10 @@ const AttachmentForm = () => {
           className='btn btn-primary btn-block'
         />
       </form>
+      <br />
+      <br />
+
+      <hr />
       <div>
         <h3> Attachments </h3>
         {attachments !== null ? (

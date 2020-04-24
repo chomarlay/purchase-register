@@ -64,7 +64,11 @@ const ProductItem = ({ product }) => {
           style={{ float: 'left' }}
           className={
             'badge ' +
-            (category === 'Computers' ? 'badge-primary' : 'badge-success')
+            (category === 'Computers'
+              ? 'badge-primary'
+              : category === 'Appliances'
+              ? 'badge-success'
+              : 'badge-dark')
           }
         >
           {category}

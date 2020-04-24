@@ -18,6 +18,7 @@ import {
   SET_SHOW_ATTACHMENTS,
   CLEAR_SHOW_ATTACHMENTS,
   ADD_ATTACHMENT,
+  DELETE_ATTACHMENT,
   GET_ATTACHMENTS,
   CLEAR_ATTACHMENTS,
 } from '../types';
@@ -103,13 +104,42 @@ const ProductState = (props) => {
     }
   };
 
+  // Delete Attachment
+  const deleteAttachment = async (id) => {
+    try {
+      await axios.delete('api/attachments/' + id);
+      dispatch({ type: DELETE_ATTACHMENT, payload: id });
+    } catch (err) {
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
+    }
+  };
+
+  const getAttachment = async (id) => {
+    try {
+      const res = await axios.get('api/attachments/' + id, {
+        responseType: 'blob',
+      });
+      //Create a Blob from the attachment Stream
+      const file = new Blob([res.data], {
+        type: res.data.type,
+      });
+      //Build a URL from the file
+      const fileURL = URL.createObjectURL(file);
+      //Open the URL on new Window
+      window.open(fileURL);
+    } catch (err) {
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
+    }
+  };
+
   // get Attachments
   const getAttachments = async (product) => {
     try {
       const res = await axios.get(`api/attachments/product/${product._id}`);
       dispatch({ type: GET_ATTACHMENTS, payload: res.data });
     } catch (err) {
-      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
+      console.log(err);
+      // dispatch({ type: PRODUCT_ERROR, payload: err.res.msg });
     }
   };
 
@@ -170,7 +200,9 @@ const ProductState = (props) => {
         setShowAttachments,
         clearShowAttachments,
         addAttachment,
+        deleteAttachment,
         getAttachments,
+        getAttachment,
         filterProducts,
         clearFilter,
         clearProducts,

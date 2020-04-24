@@ -11,10 +11,6 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) =>
-  res.json({ msg: 'Welcome to the Purchase Request API...' })
-);
-
 // Define Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));

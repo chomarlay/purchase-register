@@ -12,6 +12,7 @@ import {
   SET_SHOW_ATTACHMENTS,
   CLEAR_SHOW_ATTACHMENTS,
   ADD_ATTACHMENT,
+  DELETE_ATTACHMENT,
   GET_ATTACHMENTS,
   CLEAR_ATTACHMENTS,
 } from '../types';
@@ -67,6 +68,14 @@ export default (state, action) => {
       return {
         ...state,
         attachments: [action.payload, ...state.attachments],
+      };
+
+    case DELETE_ATTACHMENT:
+      return {
+        ...state,
+        attachments: state.attachments.filter(
+          (attachment) => attachment._id !== action.payload
+        ),
       };
     case GET_ATTACHMENTS:
       return {

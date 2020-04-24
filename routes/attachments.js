@@ -4,10 +4,9 @@ const { check, validationResult } = require('express-validator/check');
 const Attachment = require('../models/Attachment');
 const Product = require('../models/Product');
 const auth = require('../middleware/auth');
-// const bodyParser = require('body-parser');
 const multer = require('multer');
 const fs = require('fs-extra');
-
+var stream = require('stream');
 const memStorage = multer.memoryStorage();
 const upload = multer({ storage: memStorage });
 
@@ -28,11 +27,18 @@ router.get('/product/:productId', auth, async (req, res) => {
         .status(401)
         .json({ msg: 'Not authorized to add the attachment.' });
     }
-    const attachments = await Attachment.find({ product: productId })
-      //.select('-createdDate')
-      .sort({ createdDate: -1 });
-    // res.json(attachments.map((attachment) => attachment.fileName));
-    res.json(attachments);
+    const attachments = await Attachment.find({ product: productId });
+
+    res.json(
+      attachments.map((attachment) => {
+        let attach = {
+          _id: attachment._id,
+          fileName: attachment.fileName,
+          contentType: attachment.contentType,
+        };
+        return attach;
+      })
+    );
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server Error' });
@@ -85,7 +91,6 @@ router.post(
       //   msg: `Attachment uploaded successfully for ${attachment.product}`,
       // });
     } catch (err) {
-      console.error(err.message);
       res.status(500).json({ msg: 'Server Error' });
     }
   }
@@ -117,9 +122,8 @@ router.delete('/:id', auth, async (req, res) => {
     await attachment.remove();
 
     res.json({ msg: 'Attachment has been deleted' });
-    console.log('Attachment has been deleted');
   } catch (err) {
-    console.log('Cannot delete Attachment');
+    return res.status(401).json({ msg: 'Cannot delete the Attachment' });
   }
 });
 
@@ -146,9 +150,15 @@ router.get('/:id', auth, async (req, res) => {
         .json({ msg: 'Not authorized to retrieve the attachment' });
     }
 
-    res.json({ msg: 'Attachment has been retrieved' });
-    // res.contentType(attachment.contentType);
-    // res.send(attachment.attachmentFile);
+    var fileContents = Buffer.from(attachment.attachmentFile, 'base64');
+    var readStream = new stream.PassThrough();
+    readStream.end(fileContents);
+    res.set(
+      'Content-disposition',
+      'attachment; filename=' + attachment.fileName
+    );
+    res.set('Content-Type', attachment.contentType);
+    readStream.pipe(res);
   } catch (err) {
     console.log('Cannot retrieve the Attachment');
   }

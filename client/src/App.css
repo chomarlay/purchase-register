@@ -183,6 +183,11 @@ img {
   grid-gap: 2rem;
 }
 
+.grid-3-4 {
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  grid-gap: 1rem;
+}
 .btn {
   display: inline-block;
   background: var(--light-color);
@@ -417,7 +422,7 @@ table th {
   .grid-2,
   .grid-3,
   .grid-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: fr;
   }
 
   /* Text Styles */

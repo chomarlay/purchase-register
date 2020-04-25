@@ -70,7 +70,7 @@ router.post(
       product: productId,
       fileName: req.file.originalname,
       contentType: req.file.mimetype,
-      attachmentFile: new Buffer(encode_attachment, 'base64'),
+      attachmentFile: Buffer.from(encode_attachment, 'base64'),
     });
 
     try {
@@ -132,12 +132,10 @@ router.delete('/:id', auth, async (req, res) => {
 //@access   Private
 router.get('/:id', auth, async (req, res) => {
   try {
-    console.log('Get attachment...');
     let attachment = await Attachment.findById(req.params.id);
     if (!attachment) {
       return res.status(401).json({ msg: 'Attachment not found' });
     }
-    console.log('Found attachment');
     // if found ensure it belongs to the requested user
     let prod = await Product.findById(attachment.product);
     if (!prod) {

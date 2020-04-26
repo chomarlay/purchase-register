@@ -43,21 +43,21 @@ const ProductItem = ({ product }) => {
             title='Edit'
             onClick={onSetCurrent}
           >
-            <i class='fas fa-edit'></i>
+            <i className='fas fa-edit'></i>
           </button>
           <button
             className='badge badge-success'
             title='Attachments'
             onClick={onAttachments}
           >
-            <i class='far fa-file-alt'></i>
+            <i className='far fa-file-alt'></i>
           </button>
           <button
             className='badge badge-danger'
             title='Delete'
             onClick={onDelete}
           >
-            <i class='fa fa-trash'></i>
+            <i className='fa fa-trash'></i>
           </button>
         </span>
         <span

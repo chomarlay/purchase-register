@@ -75,7 +75,8 @@ const ProductState = (props) => {
       );
       dispatch({ type: UPDATE_PRODUCT, payload: res.data });
     } catch (err) {
-      dispatch({ type: PRODUCT_ERROR, payload: err.response.msg });
+      console.log('Errrrrr..' + err.response.errors);
+      dispatch({ type: PRODUCT_ERROR, payload: err.response.data.msg });
     }
   };
 

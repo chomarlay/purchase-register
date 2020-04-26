@@ -32,11 +32,12 @@ router.post(
     check(
       'password',
       'Please enter a password with 6 or more characters.'
-    ).exists()
+    ).exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log(errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
     const { email, password } = req.body;
@@ -50,14 +51,14 @@ router.post(
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
       const payload = {
-        user: { id: user.id }
+        user: { id: user.id },
       };
 
       jwt.sign(
         payload,
         jwtsecret,
         {
-          expiresIn: 3600000
+          expiresIn: 3600000,
         },
         (err, token) => {
           if (err) {

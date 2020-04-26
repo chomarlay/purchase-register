@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ProductContext from '../../context/product/productContext';
+import AlertContext from '../../context/alert/alertContext';
 
 const ProductForm = () => {
   const productContext = useContext(ProductContext);
@@ -22,6 +23,9 @@ const ProductForm = () => {
       });
     }
   }, [productContext, current]);
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   const [product, setProduct] = useState({
     name: '',
@@ -53,12 +57,16 @@ const ProductForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (current === null) {
-      addProduct(product);
+    if (name === '' || description === '') {
+      setAlert('Please enter all fields.', 'danger');
     } else {
-      updateProduct(product);
+      if (current === null) {
+        addProduct(product);
+      } else {
+        updateProduct(product);
+      }
+      clearAll();
     }
-    clearAll();
   };
 
   const clearAll = () => {

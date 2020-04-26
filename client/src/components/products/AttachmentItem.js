@@ -25,14 +25,14 @@ const AttachmentItem = ({ attachment }) => {
             title='Download'
             onClick={onDownload}
           >
-            <i class='fas fa-file-download'></i>
+            <i className='fas fa-file-download'></i>
           </button>
           <button
             className='badge badge-danger'
             title='Delete'
             onClick={onDelete}
           >
-            <i class='fa fa-trash'></i>
+            <i className='fa fa-trash'></i>
           </button>
         </span>
       </h3>

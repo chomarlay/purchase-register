@@ -57,8 +57,8 @@ const ProductForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (name === '' || description === '') {
-      setAlert('Please enter all fields.', 'danger');
+    if (name === '') {
+      setAlert('Please enter Name.', 'danger');
     } else {
       if (current === null) {
         addProduct(product);
@@ -75,7 +75,7 @@ const ProductForm = () => {
 
   const convDate = (d) => {
     // TODO find a better way to convert from JSON datetime string to js date string
-    return d.substr(0, 10);
+    return d ? d.substr(0, 10) : d;
   };
   return (
     <form onSubmit={onSubmit}>

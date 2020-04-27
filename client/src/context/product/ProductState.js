@@ -21,6 +21,7 @@ import {
   DELETE_ATTACHMENT,
   GET_ATTACHMENTS,
   CLEAR_ATTACHMENTS,
+  CLEAR_ATTACHMENT_ALERT,
 } from '../types';
 
 const ProductState = (props) => {
@@ -31,6 +32,7 @@ const ProductState = (props) => {
     products: null,
     showAttachment: false,
     attachments: null,
+    attachmentUploaded: false,
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);
@@ -168,6 +170,11 @@ const ProductState = (props) => {
   const clearShowAttachments = () => {
     dispatch({ type: CLEAR_SHOW_ATTACHMENTS });
   };
+
+  // Clear attachement alert
+  const clearAttachmentAlert = () => {
+    dispatch({ type: CLEAR_ATTACHMENT_ALERT });
+  };
   // Filter products
   const filterProducts = (text) => {
     dispatch({ type: FILTER_PRODUCTS, payload: text });
@@ -191,6 +198,7 @@ const ProductState = (props) => {
         error: state.error,
         showAttachments: state.showAttachments,
         attachments: state.attachments,
+        attachmentUploaded: state.attachmentUploaded,
         getProducts,
         addProduct,
         updateProduct,
@@ -207,6 +215,7 @@ const ProductState = (props) => {
         filterProducts,
         clearFilter,
         clearProducts,
+        clearAttachmentAlert,
       }}
     >
       {props.children}

@@ -2,17 +2,31 @@ import React, { useState, useContext, useEffect, Fragment } from 'react';
 import ProductContext from '../../context/product/productContext';
 import Spinner from '../layout/Spinner';
 import AttachmentItem from './AttachmentItem';
+import AlertContext from '../../context/alert/alertContext';
 
 const AttachmentForm = () => {
   const productContext = useContext(ProductContext);
-  const { attachments, addAttachment, current } = productContext;
+  const {
+    attachments,
+    addAttachment,
+    current,
+    attachmentUploaded,
+    clearAttachmentAlert,
+  } = productContext;
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   useEffect(() => {
     if (current !== null) {
       setProduct(current);
     }
+    if (attachmentUploaded) {
+      setAlert('Attachment uploaded.', 'success');
+      clearAttachmentAlert();
+    }
     // eslint-disable-next-line
-  }, [productContext, current]);
+  }, [productContext, current, attachmentUploaded]);
 
   const [product, setProduct] = useState({
     _id: '',
@@ -30,9 +44,13 @@ const AttachmentForm = () => {
     console.log('Add attachment');
     e.preventDefault();
     const formData = new FormData();
-    formData.append('myAttachment', file);
-    formData.append('productId', _id);
-    addAttachment(formData);
+    if (!file) {
+      setAlert('Please select a file to upload.', 'danger');
+    } else {
+      formData.append('myAttachment', file);
+      formData.append('productId', _id);
+      addAttachment(formData);
+    }
   };
 
   return (

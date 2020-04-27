@@ -91,13 +91,14 @@ router.put(
     } = req.body;
     let productFields = {};
     if (name) productFields.name = name;
-    if (description) productFields.description = description;
+    productFields.description = description;
     if (category) productFields.category = category;
-    if (model) productFields.model = model;
-    if (serialNo) productFields.serialNo = serialNo;
-    if (warranty) productFields.warranty = warranty;
-    if (amount) productFields.amount = amount;
-    if (purchaseDate) productFields.purchaseDate = purchaseDate;
+    productFields.brand = brand;
+    productFields.model = model;
+    productFields.serialNo = serialNo;
+    productFields.warranty = warranty;
+    productFields.amount = amount;
+    productFields.purchaseDate = purchaseDate;
 
     try {
       let product = await Product.findById(req.params.id);

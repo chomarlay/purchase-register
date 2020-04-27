@@ -15,6 +15,7 @@ import {
   DELETE_ATTACHMENT,
   GET_ATTACHMENTS,
   CLEAR_ATTACHMENTS,
+  CLEAR_ATTACHMENT_ALERT,
 } from '../types';
 
 export default (state, action) => {
@@ -62,12 +63,12 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload,
-        // attachments: null,
       };
     case ADD_ATTACHMENT:
       return {
         ...state,
         attachments: [action.payload, ...state.attachments],
+        attachmentUploaded: true,
       };
 
     case DELETE_ATTACHMENT:
@@ -104,6 +105,11 @@ export default (state, action) => {
         ...state,
         attachments: null,
       };
+    case CLEAR_ATTACHMENT_ALERT:
+      return {
+        ...state,
+        attachmentUploaded: false,
+      };
     case FILTER_PRODUCTS:
       return {
         ...state,
@@ -126,6 +132,7 @@ export default (state, action) => {
         error: null,
         products: null,
         attachments: null,
+        attachmentUploaded: false,
       };
 
     case PRODUCT_ERROR:

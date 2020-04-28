@@ -92,6 +92,7 @@ export default (state, action) => {
       return {
         ...state,
         showAttachments: null,
+        current: null,
         attachments: null,
       };
     case CLEAR_CURRENT:

@@ -10,15 +10,17 @@ const AttachmentForm = () => {
     attachments,
     addAttachment,
     current,
+    showAttachments,
     attachmentUploaded,
     clearAttachmentAlert,
+    clearShowAttachments,
   } = productContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   useEffect(() => {
-    if (current !== null) {
+    if (showAttachments && current !== null) {
       setProduct(current);
     }
     if (attachmentUploaded) {
@@ -40,8 +42,12 @@ const AttachmentForm = () => {
   const onChange = (e) => {
     setFile(e.target.files[0]);
   };
+
+  const showAddProduct = () => {
+    clearShowAttachments();
+  };
+
   const onSubmit = (e) => {
-    console.log('Add attachment');
     e.preventDefault();
     const formData = new FormData();
     if (!file) {
@@ -74,6 +80,16 @@ const AttachmentForm = () => {
           value='Upload'
           className='btn btn-primary btn-block'
         />
+        {current && (
+          <div>
+            <button
+              className='btn btn-light btn-block'
+              onClick={showAddProduct}
+            >
+              Clear
+            </button>
+          </div>
+        )}
       </form>
       <br />
       <br />

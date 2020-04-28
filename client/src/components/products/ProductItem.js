@@ -16,8 +16,8 @@ const ProductItem = ({ product }) => {
   const { _id, name, category, description } = product;
 
   const onSetCurrent = () => {
-    setCurrent(product);
     clearShowAttachments();
+    setCurrent(product);
   };
 
   const onAttachments = () => {
@@ -30,6 +30,7 @@ const ProductItem = ({ product }) => {
   const onDelete = () => {
     deleteProduct(_id);
     clearCurrent();
+    clearShowAttachments();
   };
 
   return (

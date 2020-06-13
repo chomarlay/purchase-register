@@ -20,7 +20,7 @@ npm run server
 -- push to github
 create a new repository in github
 then, 
-git remote add origin https://github.com/chomarlay/purchase-register.git
+git remote add origin https://github.com/username/project.git
 git push -u origin master
 
 Server side, 
@@ -56,8 +56,6 @@ npm run dev
 
 -- get rid of .gitignore and readme.md from client and add the following to the server .gitignore file
 /client/build
-
-
 /client/.env.local
 /client/.env.development.local
 /client/.env.test.local
@@ -82,18 +80,29 @@ npm i axios react-router-dom uuid react-transition-group
 -- install Heroku cli
 --- make changes in project
 server.js
+// Serve static assets (ie React client) in production -- to deploy in Heroku
+//NOTE:  this has to be after the above Define Routes
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder -- serve client
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+
 production.json  --- equivalent for default.json
 package.json -- add for herouku postbuild to install client in herouku
+-- to deploy
 from project root directory heroku login
-C:\Data\dev\src\react-apps\contact-keeper> heroku create
-Creating app... done, ⬢ peaceful-ridge-24409
-https://peaceful-ridge-24409.herokuapp.com/ | https://git.heroku.com/peaceful-ridge-24409.git
+C:\Data\dev\src\react-apps\purchase-register> heroku create
+Creating app... done, ⬢ xxxxx-xxxxx-46988
+https://xxxxx-xxxxx-24409.herokuapp.com/ | https://git.heroku.com/xxxxx-xxxxx-24409.git
 
 --commit to local git
 git add .
 git commit -m 'Prepare for deploy'
 
 -- to add the app in heroku
-heroku git:remote -a peaceful-ridge-24409
+heroku git:remote -a xxxxx-xxxxx-24409
 -- to deploy
 git push heroku master
